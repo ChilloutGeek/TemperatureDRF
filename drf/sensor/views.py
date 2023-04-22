@@ -18,10 +18,9 @@ class TemperatureView(ViewSet):
     #sensor sends POST data to DRF
     def tempread(self, request):
         serializer = TemperatureSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201.CREATED)
-        else:
-            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status=201)
 
 
